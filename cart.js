@@ -3,18 +3,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalPriceP = document.getElementById('totalPrice');
   const orderButton = document.getElementById('orderButton');
 
+  // Масив із усіма товарами у кошику (з локального сховища)
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-  // Об’єкт для збереження вибраних товарів (за замовчуванням всі вибрані)
+  // Об’єкт з вибраними товарами (галочки)
   let selectedItems = {};
 
-  // Групування товарів за id і кількістю
+  // Об’єкт для зберігання кількості кожного товару
+  let quantities = {};
+
+  // Підрахунок товарів та їх кількості в кошику
   function getItemCounts() {
     const counts = {};
     cart.forEach(id => {
       counts[id] = (counts[id] || 0) + 1;
     });
     return counts;
+  }
+
+  // Ініціалізація quantities на основі кошика, якщо пусто - створюємо
+  function initQuantities() {
+    const counts = getItemCounts();
+    Object.keys(counts).forEach(id => {
+      if (!quantities[id]) {
+        quantities[id] = counts[id];
+      }
+    });
+  }
+
+  function saveCartFromQuantities() {
+    // Оновлюємо масив cart згідно quantities
+    let newCart = [];
+    Object.entries(quantities).forEach(([id, qty]) => {
+      for (let i = 0; i < qty; i++) {
+        newCart.push(parseInt(id));
+      }
+    });
+    cart = newCart;
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
 
   function renderCart() {
@@ -29,21 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const itemCounts = getItemCounts();
+    initQuantities();
 
-    // Якщо selectedItems пустий — за замовчуванням вибираємо всі
+    // Якщо selectedItems пустий — вибираємо всі за замовчуванням
     if (Object.keys(selectedItems).length === 0) {
-      Object.keys(itemCounts).forEach(id => selectedItems[id] = true);
+      Object.keys(quantities).forEach(id => selectedItems[id] = true);
     }
 
     let total = 0;
 
-    Object.entries(itemCounts).forEach(([id, count]) => {
+    Object.entries(quantities).forEach(([id, qty]) => {
       const product = products.find(p => p.id === Number(id));
       if(product) {
         const isChecked = selectedItems[id] !== false;
 
-        // Контейнер товару
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
         itemDiv.style.display = 'flex';
@@ -71,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.style.borderRadius = '5px';
         img.style.marginRight = '10px';
 
-        // Назва і кількість (в одному блоці)
+        // Інформація (назва + input для кількості)
         const infoDiv = document.createElement('div');
         infoDiv.style.flexGrow = '1';
 
@@ -80,14 +105,24 @@ document.addEventListener('DOMContentLoaded', () => {
         nameP.style.margin = '0 0 4px 0';
         nameP.style.fontWeight = 'bold';
 
-        const qtyP = document.createElement('p');
-        qtyP.textContent = `Кількість: ${count}`;
-        qtyP.style.margin = '0';
-        qtyP.style.color = '#555';
-        qtyP.style.fontSize = '0.9em';
+        // Поле вводу кількості
+        const qtyInput = document.createElement('input');
+        qtyInput.type = 'number';
+        qtyInput.min = '1';
+        qtyInput.value = qty;
+        qtyInput.style.width = '60px';
+        qtyInput.style.marginTop = '4px';
+        qtyInput.addEventListener('change', () => {
+          let val = parseInt(qtyInput.value);
+          if (isNaN(val) || val < 1) val = 1;
+          qtyInput.value = val;
+          quantities[id] = val;
+          saveCartFromQuantities();
+          updateTotal();
+        });
 
         infoDiv.appendChild(nameP);
-        infoDiv.appendChild(qtyP);
+        infoDiv.appendChild(qtyInput);
 
         itemDiv.appendChild(checkbox);
         itemDiv.appendChild(img);
@@ -96,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cartItemsDiv.appendChild(itemDiv);
 
         if(isChecked) {
-          total += product.price * count;
+          total += product.price * qty;
         }
       }
     });
@@ -108,8 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .filter(([id, checked]) => checked)
       .map(([id]) => {
         const product = products.find(p => p.id === Number(id));
-        const count = itemCounts[id] || 0;
-        return product ? `${product.name} - ${count} шт.` : '';
+        const qty = quantities[id] || 0;
+        return product ? `${product.name} - ${qty} шт.` : '';
       }).join(', ');
 
     if (total === 0) {
@@ -130,3 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCart();
 });
+
