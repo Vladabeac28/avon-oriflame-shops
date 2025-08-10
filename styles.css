@@ -1,5 +1,26 @@
-/* Стилі для навігаційних посилань у шапці */
-header a.nav-link {
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+}
+
+header {
+  background: #c2185b;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/* Навігаційні посилання */
+.nav-link {
   color: white !important;
   text-decoration: none;
   font-weight: 500;
@@ -7,51 +28,74 @@ header a.nav-link {
   margin-right: 15px;
 }
 
-/* Стиль для контейнера з товарами у кошику */
+/* Фільтри */
+.filters {
+  display: flex;
+  gap: 5px;
+}
+
+/* Список продуктів (каталог) */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 15px;
+}
+
+/* Окремий товар у каталозі */
+.product {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+/* Кнопки */
+button, .order-btn {
+  background: #c2185b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.order-btn {
+  margin-top: 15px;
+}
+
+/* Кошик */
+
+/* Контейнер для товарів у кошику */
 #cartItems {
   display: flex;
   flex-direction: column;
   align-items: center; /* Вирівнювання по центру */
-  gap: 10px; /* Відстань між товарами */
-  padding-left: 15px; /* Відступ зліва */
-  padding-right: 15px; /* Відступ справа */
+  gap: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Оформлення окремого товару в кошику */
 .cart-item {
   width: 100%;
-  max-width: 600px; /* Максимальна ширина товару */
+  max-width: 600px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding: 8px 0;
+  padding: 8px 15px; /* додано відступ зліва і справа */
 }
 
-/* Стилі для кнопки "Замовити" та підсумку */
-.cart-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-
-/* Стилі для кнопки замовлення */
-.order-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.order-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Стилі для фото товару у кошику */
+/* Фото товару в кошику */
 .cart-item img {
   width: 90px;
   height: 90px;
@@ -61,12 +105,12 @@ header a.nav-link {
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-/* Стилі для назви та кількості у кошику */
+/* Текстові елементи в кошику */
 .cart-item p {
   margin: 0;
 }
 
-/* Стилі для полів вводу кількості */
+/* Поле вводу кількості */
 .cart-item input[type="number"] {
   width: 60px;
   margin-top: 4px;
@@ -74,5 +118,27 @@ header a.nav-link {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+/* Підсумок і кнопка "Замовити" */
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Стиль кнопки "Замовити" */
+.order-btn {
+  background-color: #c2185b;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.order-btn:hover {
+  background-color: #9e1750;
 }
 
