@@ -15,4 +15,19 @@ button, .order-btn { background: #c2185b; color: white; border: none; padding: 8
 .cart-item p {
   margin: 0;
 }
+.nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.cart-item {
+  padding-left: 15px;
+}
 
