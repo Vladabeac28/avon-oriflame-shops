@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avon & Oriflame - Інтернет-магазин</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #fafafa; }
+    header { background-color: #d5006d; color: white; padding: 15px; text-align: center; }
+    nav { background-color: #f48fb1; padding: 10px; display: flex; justify-content: center; gap: 20px; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    nav a:hover { text-decoration: underline; }
+    main { padding: 20px; max-width: 1100px; margin: auto; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+    .product-card { background-color: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
+    .product-card img { max-width: 100%; border-radius: 5px; }
+    .price { font-size: 18px; font-weight: bold; color: #d5006d; }
+    button { background-color: #d5006d; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; margin-top: 10px; }
+    button:hover { background-color: #a00052; }
+    #cart { margin-top: 30px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    th { background-color: #f48fb1; color: white; }
+    footer { background-color: #d5006d; color: white; text-align: center; padding: 15px; margin-top: 20px; }
+    .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    select, input { padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Avon & Oriflame</h1>
+    <p>Косметика, парфумерія та доглядові засоби</p>
+</header>
+
+<nav>
+    <a href="#catalog">Каталог</a>
+    <a href="#cart">Кошик</a>
+</nav>
+
+<main>
+    <section id="catalog">
+        <h2>Каталог продукції</h2>
+
+        <div class="filters">
+            <select id="brandFilter" onchange="filterProducts()">
+                <option value="all">Всі бренди</option>
+                <option value="Avon">Avon</option>
+                <option value="Oriflame">Oriflame</option>
+            </select>
+            <input type="number" id="priceFilter" placeholder="Макс. ціна" oninput="filterProducts()">
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section id="cart">
+        <h2>Кошик</h2>
+        <table id="cart-table">
+            <tr>
+                <th>Назва</th>
+                <th>Ціна</th>
+                <th>Кількість</th>
+                <th>Разом</th>
+                <th>Дії</th>
+            </tr>
+        </table>
+        <h3>Загальна сума: <span id="total">0</span> грн</h3>
+        <button onclick="placeOrder()">Замовити</button>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 Avon & Oriflame. Всі права захищені.</p>
+</footer>
+
+<script>
+    let products = [
+        { name: 'Avon Today Tomorrow Always', price: 599, brand: 'Avon', img: 'https://via.placeholder.com/200', desc: 'Квітково-фруктовий аромат, 50 мл' },
+        { name: 'Oriflame Optimals', price: 349, brand: 'Oriflame', img: 'https://via.placeholder.com/200', desc: 'Денний крем з SPF 15, 50 мл' },
+        { name: 'Avon Little Black Dress', price: 450, brand: 'Avon', img: 'https://via.placeholder.com/200', desc: 'Класичний аромат, 50 мл' },
+        { name: 'Oriflame Giordani Gold', price: 720, brand: 'Oriflame', img: 'https://via.placeholder.com/200', desc: 'Парфумована вода, 50 мл' }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderProducts(list) {
+        let grid = document.getElementById("productGrid");
+        grid.innerHTML = '';
+        list.forEach(p => {
+            let card = document.createElement("div");
+            card.className = "product-card";
+            card.innerHTML = `
+                <img src="${p.img}" alt="${p.name}">
+                <h3>${p.name}</h3>
+                <p>${p.desc}</p>
+                <p class="price">${p.price} грн</p>
+                <button onclick="addToCart('${p.name}', ${p.price})">Додати в кошик</button>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function filterProducts() {
+        let brand = document.getElementById("brandFilter").value;
+        let maxPrice = document.getElementById("priceFilter").value;
+        let filtered = products.filter(p => 
+            (brand === 'all' || p.brand === brand) &&
+            (!maxPrice || p.price <= maxPrice)
+        );
+        renderProducts(filtered);
+    }
+
+    function addToCart(name, price) {
+        let existing = cart.find(item => item.name === name);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+        saveCart();
+        updateCart();
+    }
+
+    function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        saveCart();
+        updateCart();
+    }
+
+    function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function updateCart() {
+        let table = document.getElementById("cart-table");
+        table.innerHTML = `
+            <tr>
+                <th>Назва</th>
+                <th>Ціна</th>
+                <th>Кількість</th>
+                <th>Разом</th>
+                <th>Дії</th>
+            </tr>
+        `;
+        let total = 0;
+        cart.forEach(item => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.price} грн</td>
+                <td>${item.quantity}</td>
+                <td>${item.price * item.quantity} грн</td>
+                <td><button onclick="removeFromCart('${item.name}')">Видалити</button></td>
+            `;
+            table.appendChild(row);
+            total += item.price * item.quantity;
+        });
+        document.getElementById("total").innerText = total;
+    }
+
+    function placeOrder() {
+        if (cart.length === 0) {
+            alert("Кошик порожній!");
+            return;
+        }
+        let orderDetails = cart.map(item => `${item.name} (${item.quantity} шт.)`).join(", ");
+        let message = `Замовлення: ${orderDetails}. Сума: ${document.getElementById("total").innerText} грн`;
+        window.open(`https://t.me/share/url?url=${encodeURIComponent(message)}`, "_blank");
+    }
+
+    renderProducts(products);
+    filterProducts();
+    updateCart();
+</script>
+
+</body>
+</html>
