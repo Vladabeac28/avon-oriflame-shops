@@ -8,3 +8,11 @@ header h1 { margin: 0; }
 .product img { max-width: 100%; border-radius: 5px; }
 button, .order-btn { background: #c2185b; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
 .order-btn { margin-top: 15px; }
+.cart-item img {
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.cart-item p {
+  margin: 0;
+}
+
