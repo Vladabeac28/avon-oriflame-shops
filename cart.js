@@ -19,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return counts;
   }
-
-  function initQuantities() {
+ function initQuantities() {
     const counts = getItemCounts();
     Object.keys(counts).forEach(id => {
       if (!quantities[id]) {
