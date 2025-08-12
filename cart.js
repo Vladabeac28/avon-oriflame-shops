@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateCartCount() {
     if (cartCountSpan) {
       cartCountSpan.textContent = cart.length;
+      // Якщо потрібно приховувати лічильник, коли кошик порожній:
+      cartCountSpan.style.display = cart.length > 0 ? 'inline-block' : 'none';
     }
   }
 
