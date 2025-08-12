@@ -7,10 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmDeleteBtn = document.getElementById('confirmDelete');
   const cancelDeleteBtn = document.getElementById('cancelDelete');
 
+  const cartCountSpan = document.getElementById('cartCount'); // лічильник у шапці
+
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
   let quantities = {};
   let selectedItems = {};
   let itemToDelete = null;
+
+  function updateCartCount() {
+    if (cartCountSpan) {
+      cartCountSpan.textContent = cart.length;
+    }
+  }
 
   function getItemCounts() {
     const counts = {};
@@ -19,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return counts;
   }
- function initQuantities() {
+
+  function initQuantities() {
     const counts = getItemCounts();
     Object.keys(counts).forEach(id => {
       if (!quantities[id]) {
@@ -37,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     cart = newCart;
     localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount(); // оновлення після змін
   }
 
   function renderCart() {
@@ -48,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       orderButton.href = '#';
       orderButton.style.pointerEvents = 'none';
       orderButton.style.opacity = '0.5';
+      updateCartCount();
       return;
     }
 
@@ -147,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
       orderButton.style.pointerEvents = 'auto';
       orderButton.style.opacity = '1';
     }
+
+    updateCartCount(); // оновлення лічильника при рендері
   }
 
   function updateTotal() {
