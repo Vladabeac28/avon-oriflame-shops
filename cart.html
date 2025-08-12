@@ -5,41 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Кошик</title>
     <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.google.com/icons?selected=Material+Symbols+Outlined:delete:FILL@0;wght@400;GRAD@0;opsz@24&icon.size=24&icon.color=%231f1f1f" rel="stylesheet">
+
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
 <header>
-  <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
-  <a href="cart.html" class="nav-link">🛒 Кошик (<span id="cartCount">0</span>)</a>
+    <nav>
+        <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
+        <a href="cart.html" class="nav-link">🛒 Кошик (<span id="cartCount">0</span>)</a>
+    </nav>
 </header>
 
 <main>
-<div id="cartPage">
-  <h2>Ваш кошик</h2>
-  <div id="cartItems">
-    <!-- Товари будуть динамічно додаватись скриптом -->
-  </div>
+    <section id="cartPage">
+        <h2>Ваш кошик</h2>
+        <div id="cartItems">
+            <!-- Товари будуть динамічно додаватись скриптом -->
+        </div>
 
-  
-    <div class="cart-footer">
-    <div id="totalPrice" class="cart-total">Всього: 0 грн</div>
-    <a id="orderButton" class="order-btn" href="#">Замовити</a>
-  </div>
-</div>
-<!-- Модальне вікно підтвердження видалення -->
-<div id="confirmModal" class="modal hidden">
-  <div class="modal-content">
-    <p>Ви дійсно хочете видалити цей товар з кошика?</p>
-    <div class="modal-actions">
-      <button id="confirmDelete" class="order-btn">Так</button>
-      <button id="cancelDelete" class="order-btn">Ні</button>
+        <div class="cart-footer">
+            <div id="totalPrice" class="cart-total">Всього: 0 грн</div>
+            <a id="orderButton" class="order-btn" href="#">Замовити</a>
+        </div>
+    </section>
+
+    <!-- Модальне вікно підтвердження видалення -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content">
+            <p>Ви дійсно хочете видалити цей товар з кошика?</p>
+            <div class="modal-actions">
+                <button id="confirmDelete" class="order-btn">Так</button>
+                <button id="cancelDelete" class="order-btn">Ні</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </main>
 
 <script src="products.js"></script>
 <script src="cart.js"></script>
 </body>
 </html>
-
