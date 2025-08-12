@@ -16,16 +16,37 @@
 <div id="cartPage">
   <h2>Ваш кошик</h2>
   <div id="cartItems">
-</div>
-<div class="cart-footer">
- <div class="cart-total">Всього: 0 грн</div>
+    <!-- Приклад одного товару з кнопкою видалення -->
+    <div class="cart-item" data-id="1">
+      <img src="product1.jpg" alt="Товар 1" />
+      <div class="cart-item-details">
+        <p>Товар 1</p>
+        <p>Ціна: 100 грн</p>
+        <input type="number" value="1" min="1" />
+      </div>
+      <button class="remove-btn" aria-label="Видалити товар" title="Видалити">🗑️</button>
+    </div>
+    <!-- Інші товари будуть динамічно додаватись скриптом -->
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">Всього: 0 грн</div>
     <button class="order-btn">Замовити</button>
   </div>
 </div>
-    
+
+<!-- Модальне вікно підтвердження видалення -->
+<div id="confirmModal" class="modal hidden">
+  <div class="modal-content">
+    <p>Ви дійсно хочете видалити цей товар з кошика?</p>
+    <div class="modal-actions">
+      <button id="confirmDelete" class="order-btn">Так</button>
+      <button id="cancelDelete" class="order-btn">Ні</button>
+    </div>
+  </div>
+</div>
+
 </main>
 <script src="products.js"></script>
 <script src="cart.js"></script>
 </body>
 </html>
-
