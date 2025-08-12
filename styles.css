@@ -73,72 +73,43 @@ button, .order-btn {
   margin-top: 15px;
 }
 /* Кошик */
+/* Контейнер для всієї сторінки кошика */
+#cartPage {
+  max-width: 600px;        /* обмежує ширину кошика */
+  margin: 0 auto;          /* центровано по горизонталі */
+  padding: 20px 15px;      /* внутрішні відступи */
+  box-sizing: border-box;
+}
 
-/* Контейнер для товарів у кошику */
+/* Заголовок кошика */
+#cartPage h2 {
+  text-align: center;      /* центр тексту */
+  margin-bottom: 20px;     /* відступ знизу */
+}
+
+/* Контейнер для товарів */
 #cartItems {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Вирівнювання по центру */
   gap: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0;              /* прибираємо зайві відступи */
 }
 
-/* Оформлення окремого товару в кошику */
+/* Окремий товар */
 .cart-item {
-  width: 100%;
-  max-width: 600px;
-  box-sizing: border-box;
+  width: 100%;             /* ширина по контейнеру */
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding: 8px 15px; /* додано відступ зліва і справа */
+  padding: 8px 15px;
+  box-sizing: border-box;
 }
 
-/* Фото товару в кошику */
-.cart-item img {
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
-/* Текстові елементи в кошику */
-.cart-item p {
-  margin: 0;
-}
-
-/* Поле вводу кількості */
-.cart-item input[type="number"] {
-  width: 60px;
-  margin-top: 4px;
-  padding: 4px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Підсумок і кнопка "Замовити" */
+/* Підсумок і кнопка */
 .cart-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  width: 100%;
 }
-
-/* Стиль кнопки "Замовити" */
-.order-btn {
-  background-color: #c2185b;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.order-btn:hover {
-  background-color: #9e1750;
-}
-
