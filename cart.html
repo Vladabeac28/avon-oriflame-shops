@@ -9,28 +9,19 @@
 <body>
 <header>
   <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
-  <a href="cart.html" class="nav-link">🛒 Кошик (3)</a>
+  <a href="cart.html" class="nav-link">🛒 Кошик (<span id="cartCount">0</span>)</a>
 </header>
+
 <main>
-    
 <div id="cartPage">
   <h2>Ваш кошик</h2>
   <div id="cartItems">
-    <!-- Приклад одного товару з кнопкою видалення -->
-    <div class="cart-item" data-id="1">
-      <img src="product1.jpg" alt="Товар 1" />
-      <div class="cart-item-details">
-        <p>Товар 1</p>
-        <p>Ціна: 100 грн</p>
-        <input type="number" value="1" min="1" />
-      </div>
-      <button class="remove-btn" aria-label="Видалити товар" title="Видалити">🗑️</button>
-    </div>
-    <!-- Інші товари будуть динамічно додаватись скриптом -->
+    <!-- Товари будуть динамічно додаватись скриптом -->
   </div>
+
   <div class="cart-footer">
-    <div class="cart-total">Всього: 0 грн</div>
-    <button class="order-btn">Замовити</button>
+    <div id="totalPrice" class="cart-total">Всього: 0 грн</div>
+    <a id="orderButton" class="order-btn" href="#">Замовити</a>
   </div>
 </div>
 
@@ -44,9 +35,10 @@
     </div>
   </div>
 </div>
-
 </main>
+
 <script src="products.js"></script>
 <script src="cart.js"></script>
 </body>
 </html>
+
