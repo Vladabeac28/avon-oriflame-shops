@@ -117,6 +117,14 @@ button, .order-btn {
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
+/* Контейнер з деталями товару */
+.cart-item-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 /* Текстові елементи в кошику */
 .cart-item p {
   margin: 0;
@@ -130,6 +138,22 @@ button, .order-btn {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+/* Кнопка видалення (іконка корзини) */
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: #c2185b;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 10px;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.remove-btn:hover {
+  color: #9e1750;
 }
 
 /* Підсумок і кнопка "Замовити" */
@@ -165,23 +189,8 @@ button, .order-btn {
 .order-btn:hover {
   background-color: #9e1750;
 }
-/* Кнопка видалення (іконка корзини) */
-.remove-btn {
-  background: transparent;
-  border: none;
-  color: #c2185b;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 0 10px;
-  line-height: 1;
-  transition: color 0.3s;
-}
 
-.remove-btn:hover {
-  color: #9e1750;
-}
-
-/* Модальне вікно в корзині */
+/* Модальне вікно */
 .modal {
   position: fixed;
   top: 0;
