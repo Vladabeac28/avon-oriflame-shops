@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Avon & Oriflame Shop</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <header>
@@ -16,16 +15,43 @@
             <option value="Avon">Avon</option>
             <option value="Oriflame">Oriflame</option>
         </select>
-        <input type="number" id="minPrice" placeholder="Мін. ціна">
-        <input type="number" id="maxPrice" placeholder="Макс. ціна">
+        <input type="number" id="minPrice" placeholder="Мін. ціна" />
+        <input type="number" id="maxPrice" placeholder="Макс. ціна" />
         <button id="applyFilters">Застосувати</button>
     </div>
+
     <div class="cart-link">
-        <a href="cart.html"class="nav-link">🛒 Кошик (<span id="cartCount">0</span>)</a>
+        <a href="cart.html" class="nav-link">🛒 Кошик (<span id="cartCount">0</span>)</a>
+    </div>
+
+    <!-- Додана кнопка входу -->
+    <div class="login-container">
+        <button id="loginBtn">Увійти / Зареєструватися</button>
     </div>
 </header>
+
 <main id="productList" class="product-list"></main>
+
+<!-- Модальне вікно входу -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Вхід</h2>
+        <form id="loginForm">
+            <label for="username">Email або Логін</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit">Увійти</button>
+            <a href="#" class="forgot">Забули пароль?</a>
+        </form>
+    </div>
+</div>
+
 <script src="products.js"></script>
 <script src="main.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
