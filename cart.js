@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmDeleteBtn = document.getElementById('confirmDelete');
   const cancelDeleteBtn = document.getElementById('cancelDelete');
 
-  const cartCountSpan = document.getElementById('cartCount'); // лічильник у шапці
+  const cartCountSpan = document.getElementById('cartCount');
 
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
   let quantities = {};
@@ -46,13 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     cart = newCart;
     localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount(); // оновлення після змін
+    updateCartCount();
   }
 
   function renderCart() {
     cartItemsDiv.innerHTML = '';
 
-    if(cart.length === 0) {
+    if (cart.length === 0) {
       cartItemsDiv.innerHTML = '<p>Ваш кошик порожній.</p>';
       totalPriceP.textContent = '';
       orderButton.href = '#';
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Object.entries(quantities).forEach(([id, qty]) => {
       const product = products.find(p => p.id === Number(id));
-      if(product) {
+      if (product) {
         const isChecked = selectedItems[id] !== false;
 
         const itemDiv = document.createElement('div');
@@ -116,10 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
         infoDiv.appendChild(nameP);
         infoDiv.appendChild(qtyInput);
 
-        // Кнопка видалення з Material Icons
+        // Кнопка видалення з Material Symbols Outlined
         const removeBtn = document.createElement('button');
         removeBtn.className = 'remove-btn';
-        removeBtn.innerHTML = '<span class="material-icons">delete</span>';
+        removeBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
         removeBtn.addEventListener('click', () => {
           itemToDelete = id;
           confirmModal.classList.remove('hidden');
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cartItemsDiv.appendChild(itemDiv);
 
-        if(isChecked) {
+        if (isChecked) {
           total += product.price * qty;
         }
       }
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
       orderButton.style.opacity = '1';
     }
 
-    updateCartCount(); // оновлення лічильника при рендері
+    updateCartCount();
   }
 
   function updateTotal() {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   confirmDeleteBtn.addEventListener('click', () => {
-    if(itemToDelete !== null) {
+    if (itemToDelete !== null) {
       delete quantities[itemToDelete];
       saveCartFromQuantities();
       itemToDelete = null;
@@ -183,4 +183,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCart();
 });
-
