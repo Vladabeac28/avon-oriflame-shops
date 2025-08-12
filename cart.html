@@ -1,45 +1,63 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Кошик</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кошик</title>
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Google Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
-    <!-- Google Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <style>
+    /* Стиль для лічильника товарів біля заголовка */
+    #cartCount {
+      background-color: #b30000;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 8px;
+      font-size: 0.9em;
+      margin-left: 10px;
+      vertical-align: middle;
+      font-weight: 600;
+      min-width: 24px;
+      text-align: center;
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
 <header>
-    <nav>
-        <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
-        <span id="cartCount" style="display:none;">0</span>
-    </nav>
+  <nav>
+    <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
+  </nav>
 </header>
 
 <main>
-    <section id="cartPage">
-        <h2>Ваш кошик</h2>
-        <div id="cartItems">
-            <!-- Товари будуть динамічно додаватись скриптом -->
-        </div>
-
-        <div class="cart-footer">
-            <div id="totalPrice" class="cart-total">Всього: 0 грн</div>
-            <a id="orderButton" class="order-btn" href="#">Замовити</a>
-        </div>
-    </section>
-
-    <!-- Модальне вікно підтвердження видалення -->
-    <div id="confirmModal" class="modal hidden">
-        <div class="modal-content">
-            <p>Ви дійсно хочете видалити цей товар з кошика?</p>
-            <div class="modal-actions">
-                <button id="confirmDelete" class="order-btn">Так</button>
-                <button id="cancelDelete" class="order-btn">Ні</button>
-            </div>
-        </div>
+  <section id="cartPage">
+    <h2>
+      Ваш кошик<span id="cartCount">0</span>
+    </h2>
+    <div id="cartItems">
+      <!-- Товари будуть динамічно додаватись скриптом -->
     </div>
+
+    <div class="cart-footer">
+      <div id="totalPrice" class="cart-total">Всього: 0 грн</div>
+      <a id="orderButton" class="order-btn" href="#">Замовити</a>
+    </div>
+  </section>
+
+  <!-- Модальне вікно підтвердження видалення -->
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-content">
+      <p>Ви дійсно хочете видалити цей товар з кошика?</p>
+      <div class="modal-actions">
+        <button id="confirmDelete" class="order-btn">Так</button>
+        <button id="cancelDelete" class="order-btn">Ні</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script src="products.js"></script>
