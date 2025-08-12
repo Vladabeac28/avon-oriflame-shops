@@ -72,7 +72,9 @@ button, .order-btn {
 .order-btn {
   margin-top: 15px;
 }
+
 /* Кошик */
+
 /* Контейнер для всієї сторінки кошика */
 #cartPage {
   max-width: 600px;        /* обмежує ширину кошика */
@@ -105,11 +107,61 @@ button, .order-btn {
   box-sizing: border-box;
 }
 
-/* Підсумок і кнопка */
+/* Фото товару */
+.cart-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Текстові елементи в кошику */
+.cart-item p {
+  margin: 0;
+}
+
+/* Поле вводу кількості */
+.cart-item input[type="number"] {
+  width: 60px;
+  margin-top: 4px;
+  padding: 4px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Підсумок і кнопка "Замовити" */
 .cart-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;  /* Центруємо по горизонталі */
+  align-items: center;      /* Вирівнюємо по вертикалі */
+  gap: 20px;                /* Відстань між "Всього" і кнопкою */
   margin-top: 20px;
   width: 100%;
+  max-width: 600px;
+}
+
+/* Текст підсумку */
+.cart-total {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c2185b;
+}
+
+/* Стиль кнопки "Замовити" */
+.order-btn {
+  background-color: #c2185b;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-btn:hover {
+  background-color: #9e1750;
 }
