@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Кошик</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="index.html"> class="nav-link" ← На головну</a>
-        </nav>
-    </header>
+<header>
+    <nav>
+        <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
+        <span id="cartCount" style="display:none;">0</span>
+    </nav>
+</header>
 
-    <main>
-        <h2>
-            Ваш кошик (<span id="cartCount">0</span>)
-        </h2>
-        <div id="cartItems"></div>
-        <p id="totalPrice">Загальна сума: 0 грн</p>
-        <button id="checkoutBtn">Оформити замовлення</button>
-    </main>
+<main>
+    <section id="cartPage">
+        <h2>Ваш кошик</h2>
+        <div id="cartItems">
+            <!-- Товари будуть динамічно додаватись скриптом -->
+        </div>
 
-    <script src="cart.js"></script>
+        <div class="cart-footer">
+            <div id="totalPrice" class="cart-total">Всього: 0 грн</div>
+            <a id="orderButton" class="order-btn" href="#">Замовити</a>
+        </div>
+    </section>
+
+    <!-- Модальне вікно підтвердження видалення -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content">
+            <p>Ви дійсно хочете видалити цей товар з кошика?</p>
+            <div class="modal-actions">
+                <button id="confirmDelete" class="order-btn">Так</button>
+                <button id="cancelDelete" class="order-btn">Ні</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
 </body>
 </html>
