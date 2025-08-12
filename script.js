@@ -4,7 +4,7 @@ const loginBtn = document.getElementById("loginBtn");
 const closeBtn = document.querySelector(".close");
 const form = document.getElementById("loginForm");
 
-// Відкриття модалки
+// Відкриття модалки для входу в аккаунт
 loginBtn.onclick = () => {
     modal.style.display = "block";
 };
@@ -36,3 +36,36 @@ form.onsubmit = (e) => {
         modal.style.display = "none";
     }
 };
+let itemToDelete = null;
+
+document.addEventListener('click', function(event) {
+  // Клік по кнопці видалення
+  if (event.target.classList.contains('remove-btn')) {
+    itemToDelete = event.target.closest('.cart-item');
+    if (itemToDelete) {
+      // Відкрити модальне вікно
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
+  }
+});
+
+// Підтвердити видалення
+document.getElementById('confirmDelete').addEventListener('click', function() {
+  if (itemToDelete) {
+    itemToDelete.remove();
+    itemToDelete = null;
+    updateCartSummary(); // Функція оновлення підсумку (реалізуй її)
+    document.getElementById('confirmModal').classList.add('hidden');
+  }
+});
+
+// Відмінити видалення
+document.getElementById('cancelDelete').addEventListener('click', function() {
+  itemToDelete = null;
+  document.getElementById('confirmModal').classList.add('hidden');
+});
+
+function updateCartSummary() {
+  // Логіка підрахунку загальної суми і оновлення #cartTotal
+  // Реалізуй відповідно до своєї структури кошика
+}
