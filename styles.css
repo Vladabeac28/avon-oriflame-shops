@@ -72,7 +72,8 @@ button, .order-btn {
 .order-btn {
   margin-top: 15px;
 }
-/* Контейнер сторінки кошика займає весь екран */
+
+/* Контейнер сторінки кошика */
 #cartPage {
   display: flex;
   flex-direction: column;
@@ -98,11 +99,12 @@ button, .order-btn {
 #cartItems {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центруємо товари */
+  align-items: center;     /* Центруємо товари */
   gap: 15px;
   width: 100%;
   max-width: 600px;
-  padding: 0 15px;
+  padding-left: 40px;      /* Збільшений відступ зліва */
+  padding-right: 15px;
   box-sizing: border-box;
 }
 
@@ -113,7 +115,10 @@ button, .order-btn {
   width: 100%;
   background: white;
   border-radius: 8px;
-  padding: 10px 15px;
+  padding-left: 20px;      /* Збільшений лівий відступ */
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
   box-sizing: border-box;
   gap: 15px;
@@ -134,6 +139,7 @@ button, .order-btn {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 10px;       /* Відступ тексту від картинки */
 }
 
 /* Поле вводу кількості */
@@ -180,3 +186,4 @@ button, .order-btn {
 .order-btn:hover {
   background-color: #9e1750;
 }
+
