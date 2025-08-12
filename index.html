@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Avon & Oriflame Shop</title>
     <link rel="stylesheet" href="styles.css" />
-    <!-- Додамо додаткові стилі для модалки -->
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <style>
-        /* Мінімальні стилі модалки, щоб не порушувати загальний дизайн */
+        /* Мінімальні стилі модалки */
         .modal {
             display: none;
             position: fixed;
@@ -23,9 +25,6 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        }
-        .modal-content h2 {
-            margin-top: 0;
         }
         .close {
             float: right;
@@ -85,7 +84,6 @@
         form .forgot:hover {
             text-decoration: underline;
         }
-        /* Розташування кнопки входу у шапці */
         header {
             display: flex;
             align-items: center;
@@ -142,8 +140,18 @@
 
 <script src="products.js"></script>
 <script src="main.js"></script>
-<!-- Підключаємо лише auth.js для сторінки з модалкою входу -->
 <script src="auth.js"></script>
+<script>
+    // Оновлення кількості товарів у кошику
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartCount = document.getElementById('cartCount');
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cartCount.textContent = cart.length;
+        }
+        updateCartCount();
+        window.addEventListener('storage', updateCartCount);
+    });
+</script>
 </body>
 </html>
-
