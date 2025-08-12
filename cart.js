@@ -106,10 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         infoDiv.appendChild(nameP);
         infoDiv.appendChild(qtyInput);
 
-        // Кнопка видалення
+        // Кнопка видалення з Material Icons
         const removeBtn = document.createElement('button');
         removeBtn.className = 'remove-btn';
-        removeBtn.textContent = '🗑️';
+        removeBtn.innerHTML = '<span class="material-icons">delete</span>';
         removeBtn.addEventListener('click', () => {
           itemToDelete = id;
           confirmModal.classList.remove('hidden');
@@ -171,3 +171,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCart();
 });
+
