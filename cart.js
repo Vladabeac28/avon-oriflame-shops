@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { 
   const cartItemsDiv = document.getElementById('cartItems');
   const totalPriceP = document.getElementById('totalPrice');
   const orderButton = document.getElementById('orderButton');
@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCartCount() {
     if (cartCountSpan) {
-      cartCountSpan.textContent = cart.length;
+      // Відображаємо загальну кількість товарів у кошику
+      const totalQuantity = Object.values(quantities).reduce((sum, q) => sum + q, 0);
+      cartCountSpan.textContent = totalQuantity;
     }
   }
 
