@@ -1,99 +1,58 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Avon & Oriflame Shop</title>
-    <link rel="stylesheet" href="styles.css" />
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Avon & Oriflame Shop</title>
+<link rel="stylesheet" href="styles.css" />
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <style>
-        /* Мінімальні стилі модалки */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background: #fff;
-            max-width: 320px;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        }
-        .close {
-            float: right;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #900;
-        }
-        #loginBtn {
-            background-color: #b30000;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-        #loginBtn:hover {
-            background-color: #ff4d4d;
-        }
-        form label {
-            display: block;
-            margin-top: 12px;
-            font-weight: 600;
-            color: #b30000;
-        }
-        form input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 4px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        form button[type="submit"] {
-            margin-top: 16px;
-            background-color: #b30000;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        form button[type="submit"]:hover {
-            background-color: #ff4d4d;
-        }
-        form .forgot {
-            display: block;
-            margin-top: 10px;
-            text-align: center;
-            color: #b30000;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        form .forgot:hover {
-            text-decoration: underline;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .login-container {
-            margin-left: 20px;
-        }
-    </style>
+<style>
+    /* Мінімальні стилі модалки */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+        background: #fff;
+        max-width: 320px;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    .close {
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #900;
+    }
+    #loginBtn {
+        background-color: #b30000;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+    #loginBtn:hover { background-color: #ff4d4d; }
+    form label { display: block; margin-top: 12px; font-weight: 600; color: #b30000; }
+    form input { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    form button[type="submit"] { margin-top: 16px; background-color: #b30000; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    form button[type="submit"]:hover { background-color: #ff4d4d; }
+    form .forgot { display: block; margin-top: 10px; text-align: center; color: #b30000; text-decoration: none; font-size: 14px; }
+    form .forgot:hover { text-decoration: underline; }
+    header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .login-container { margin-left: 20px; }
+</style>
 </head>
 <body>
 <header>
@@ -128,10 +87,8 @@
         <form id="loginForm">
             <label for="username">Email або Логін</label>
             <input type="text" id="username" name="username" required />
-
             <label for="password">Пароль</label>
             <input type="password" id="password" name="password" required />
-
             <button type="submit">Увійти</button>
             <a href="#" class="forgot">Забули пароль?</a>
         </form>
@@ -151,6 +108,36 @@
         }
         updateCartCount();
         window.addEventListener('storage', updateCartCount);
+
+        // Модальне вікно
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeBtn = loginModal.querySelector('.close');
+
+        // Відкриття модалки
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+
+        // Закриття при кліку на X
+        closeBtn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+
+        // Закриття при кліку поза модалкою
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Обробка форми
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Форма увійти надіслана');
+            loginModal.style.display = 'none';
+        });
     });
 </script>
 </body>
