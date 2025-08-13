@@ -6,67 +6,44 @@
 <title>Адмін панель</title>
 <link rel="stylesheet" href="style.css" />
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background: #fafafa;
-  }
-  form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 400px;
-    margin: auto;
-  }
-  input,
-  select,
-  textarea,
-  button {
-    width: 100%;
-    padding: 8px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  button {
-    background: #c2185b;
-    color: white;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #a01549;
-  }
-  #preview {
-    max-width: 200px;
-    display: block;
-    margin: 10px auto 0 auto;
-  }
+  body { font-family: Arial, sans-serif; padding: 20px; background: #fafafa; }
+  #loginFormContainer, #addProductForm { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+  input, select, textarea, button { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; }
+  button { background: #c2185b; color: white; cursor: pointer; }
+  button:hover { background: #a01549; }
+  #preview { max-width: 200px; display: block; margin: 10px auto 0 auto; }
 </style>
 </head>
 <body>
 
-<h1 style="text-align:center;">Додати новий товар</h1>
+<h1 style="text-align:center;">Адмінка</h1>
 
-<form id="addProductForm">
+<div id="loginFormContainer">
+  <h2>Увійдіть як адмін</h2>
+  <form id="loginForm">
+    <label>Логін:</label>
+    <input type="text" id="loginUsername" required />
+    <label>Пароль:</label>
+    <input type="password" id="loginPassword" required />
+    <button type="submit">Увійти</button>
+  </form>
+</div>
+
+<form id="addProductForm" style="display:none;">
   <label>Назва товару:</label>
   <input type="text" id="productName" required />
-
   <label>Бренд:</label>
   <select id="productBrand" required>
     <option value="">Виберіть бренд</option>
     <option value="Avon">Avon</option>
     <option value="Oriflame">Oriflame</option>
   </select>
-
   <label>Ціна (грн):</label>
   <input type="number" id="productPrice" required min="0" step="0.01" />
-
   <label>Фото:</label>
   <input type="file" id="productImage" accept="image/*" required />
-
   <label>Опис:</label>
   <textarea id="productDescription" required></textarea>
-
   <button type="submit">Додати товар</button>
 </form>
 
@@ -78,18 +55,8 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-  import {
-    getStorage,
-    ref,
-    uploadBytes,
-    getDownloadURL
-  } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAunUHobKwdTn7_5z0sjLlv98LoPm2-Nnw",
@@ -105,19 +72,36 @@
   const db = getFirestore(app);
   const storage = getStorage(app);
 
-  const form = document.getElementById("addProductForm");
+  const loginForm = document.getElementById("loginForm");
+  const loginContainer = document.getElementById("loginFormContainer");
+  const addProductForm = document.getElementById("addProductForm");
   const preview = document.getElementById("preview");
   const productImageInput = document.getElementById("productImage");
 
-  // Попередній перегляд фото
+  // --- Логін ---
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+
+    if(username === "admin" && password === "admin123"){
+      alert("Вхід успішний!");
+      loginContainer.style.display = "none";
+      addProductForm.style.display = "block";
+    } else {
+      alert("Невірний логін або пароль!");
+    }
+  });
+
+  // --- Попередній перегляд фото ---
   productImageInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     preview.src = file ? URL.createObjectURL(file) : "";
   });
 
-  form.addEventListener("submit", async (e) => {
+  // --- Додавання товару ---
+  addProductForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const name = document.getElementById("productName").value.trim();
     const brand = document.getElementById("productBrand").value;
     const price = parseFloat(document.getElementById("productPrice").value);
@@ -129,13 +113,31 @@
       return;
     }
 
-    const submitBtn = form.querySelector("button[type='submit']");
+    const submitBtn = addProductForm.querySelector("button[type='submit']");
     submitBtn.disabled = true;
     submitBtn.textContent = "Завантаження...";
 
     try {
       const filename = `products/${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
       const storageRef = ref(storage, filename);
-
       const uploadResult = await uploadBytes(storageRef, file);
       const imageUrl = await getDownloadURL(uploadResult.ref);
+
+      await addDoc(collection(db, "products"), {
+        name, brand, price, description, imageUrl, createdAt: serverTimestamp()
+      });
+
+      alert("Товар успішно додано!");
+      addProductForm.reset();
+      preview.src = "";
+    } catch (error) {
+      alert("Помилка при додаванні товару: " + error.message);
+      console.error(error);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Додати товар";
+    }
+  });
+</script>
+</body>
+</html>
