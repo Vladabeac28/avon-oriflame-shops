@@ -7,8 +7,13 @@ import {
   query,
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import {
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
-// Конфіг Firebase (твій)
+// Конфіг Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAunUHobKwdTn7_5z0sjLlv98LoPm2-Nnw",
   authDomain: "avon-oriflame-shops.firebaseapp.com",
@@ -21,6 +26,7 @@ const firebaseConfig = {
 // Ініціалізація Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 const productList = document.getElementById("productList");
 const brandFilter = document.getElementById("brandFilter");
@@ -61,13 +67,13 @@ function renderProducts(filterBrand = '', minPrice = 0, maxPrice = Infinity) {
   updateCartCount();
 }
 
-// Функція оновлення лічильника кошика
+// Оновлення лічильника кошика
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
   cartCountElem.textContent = cart.length;
 }
 
-// Обробка кліку по кнопці "Застосувати" фільтрів
+// Обробка фільтрів
 applyFiltersBtn.addEventListener('click', () => {
   const brand = brandFilter.value;
   const minPrice = parseFloat(minPriceInput.value) || 0;
@@ -75,22 +81,37 @@ applyFiltersBtn.addEventListener('click', () => {
   renderProducts(brand, minPrice, maxPrice);
 });
 
-// Підписка на колекцію products в Firestore
-const productsRef = collection(db, "products");
-const q = query(productsRef, orderBy("createdAt", "desc"));
+// Підключення до Firestore і завантаження товарів
+function loadProducts() {
+  const productsRef = collection(db, "products");
+  const q = query(productsRef, orderBy("createdAt", "desc"));
 
-onSnapshot(q, (snapshot) => {
-  products = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+  onSnapshot(q, (snapshot) => {
+    products = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
-  // Автоматично оновлюємо відображення при оновленні даних
-  const brand = brandFilter.value;
-  const minPrice = parseFloat(minPriceInput.value) || 0;
-  const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
-  renderProducts(brand, minPrice, maxPrice);
+    const brand = brandFilter.value;
+    const minPrice = parseFloat(minPriceInput.value) || 0;
+    const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+    renderProducts(brand, minPrice, maxPrice);
+  });
+}
+
+// ====== АВТОРИЗАЦІЯ ======
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("Користувач увійшов:", user.uid);
+    loadProducts(); // Завантажуємо товари тільки після входу
+  } else {
+    console.log("Користувач не авторизований. Виконуємо анонімний вхід...");
+    signInAnonymously(auth).catch((error) => {
+      console.error("Помилка входу:", error);
+    });
+  }
 });
 
-// Початкове оновлення лічильника кошика
+// Початкове оновлення кошика
 updateCartCount();
+
