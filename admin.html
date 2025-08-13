@@ -3,35 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Адмін панель</title>
+<title>Тест адмінки</title>
 <link rel="stylesheet" href="style.css" />
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; background: #fafafa; }
-  #loginFormContainer, #addProductForm { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
-  input, select, textarea, button { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; }
-  button { background: #c2185b; color: white; cursor: pointer; }
-  button:hover { background: #a01549; }
-  #preview { max-width: 200px; display: block; margin: 10px auto 0 auto; }
-</style>
 </head>
 <body>
 
-<h1 style="text-align:center;">Адмінка</h1>
+<h1 style="text-align:center;">Тест адмінки</h1>
 
-<div id="loginFormContainer">
-  <h2>Увійдіть як адмін</h2>
-  <form id="loginForm">
-    <label>Логін:</label>
-    <input type="text" id="loginUsername" required />
-    <label>Пароль:</label>
-    <input type="password" id="loginPassword" required />
-    <button type="submit">Увійти</button>
-  </form>
-</div>
-
-<form id="addProductForm" style="display:none;">
+<form id="addProductForm">
   <label>Назва товару:</label>
-  <input type="text" id="productName" required />
+  <input type="text" id="productName" required autocomplete="off"/>
   <label>Бренд:</label>
   <select id="productBrand" required>
     <option value="">Виберіть бренд</option>
@@ -39,7 +20,7 @@
     <option value="Oriflame">Oriflame</option>
   </select>
   <label>Ціна (грн):</label>
-  <input type="number" id="productPrice" required min="0" step="0.01" />
+  <input type="number" id="productPrice" required min="0" step="0.01" autocomplete="off"/>
   <label>Фото:</label>
   <input type="file" id="productImage" accept="image/*" required />
   <label>Опис:</label>
@@ -48,10 +29,6 @@
 </form>
 
 <img id="preview" alt="Попередній перегляд фото" />
-
-<p style="text-align:center; margin-top:20px;">
-  <a href="index.html" class="nav-link">⬅ Повернутися до каталогу</a>
-</p>
 
 <script type="module" src="admin-main.js"></script>
 </body>
