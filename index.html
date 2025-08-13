@@ -7,42 +7,12 @@
 <link rel="stylesheet" href="styles.css" />
 <!-- Material Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <style>
-    /* Мінімальні стилі модалки */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0; top: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-        background: #fff;
-        max-width: 320px;
-        margin: 10% auto;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    }
-    .close {
-        float: right;
-        font-size: 24px;
-        font-weight: bold;
-        cursor: pointer;
-        color: #900;
-    }
-    #loginBtn {
-        background-color: #b30000;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-    }
+    /* Стилі модалки і загальні */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
+    .modal-content { background: #fff; max-width: 320px; margin: 10% auto; padding: 20px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+    .close { float: right; font-size: 24px; font-weight: bold; cursor: pointer; color: #900; }
+    #loginBtn { background-color: #b30000; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease; }
     #loginBtn:hover { background-color: #ff4d4d; }
     form label { display: block; margin-top: 12px; font-weight: 600; color: #b30000; }
     form input { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
@@ -57,7 +27,6 @@
 <body>
 <header>
     <h1>Каталог продукції</h1>
-
     <div class="filters">
         <select id="brandFilter">
             <option value="">Всі бренди</option>
@@ -68,11 +37,9 @@
         <input type="number" id="maxPrice" placeholder="Макс. ціна" />
         <button id="applyFilters">Застосувати</button>
     </div>
-
     <div class="cart-link">
         <a href="cart.html" class="nav-link">🛒 Кошик (<span id="cartCount">0</span>)</a>
     </div>
-
     <div class="login-container">
         <button id="loginBtn">Увійти / Зареєструватися</button>
     </div>
@@ -95,50 +62,26 @@
     </div>
 </div>
 
-<!-- Підключаємо main.js як ES-модуль -->
 <script type="module" src="main.js"></script>
-
 <script>
-    // Оновлення кількості товарів у кошику
-    document.addEventListener('DOMContentLoaded', () => {
-        const cartCount = document.getElementById('cartCount');
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            cartCount.textContent = cart.length;
-        }
-        updateCartCount();
-        window.addEventListener('storage', updateCartCount);
+document.addEventListener('DOMContentLoaded', () => {
+    const cartCount = document.getElementById('cartCount');
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        cartCount.textContent = cart.length;
+    }
+    updateCartCount();
+    window.addEventListener('storage', updateCartCount);
 
-        // Модальне вікно
-        const loginBtn = document.getElementById('loginBtn');
-        const loginModal = document.getElementById('loginModal');
-        const closeBtn = loginModal.querySelector('.close');
+    // Модальне вікно
+    const loginBtn = document.getElementById('loginBtn');
+    const modal = document.getElementById('loginModal');
+    const closeBtn = modal.querySelector('.close');
 
-        // Відкриття модалки
-        loginBtn.addEventListener('click', () => {
-            loginModal.style.display = 'block';
-        });
-
-        // Закриття при кліку на X
-        closeBtn.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
-
-        // Закриття при кліку поза модалкою
-        window.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                loginModal.style.display = 'none';
-            }
-        });
-
-        // Обробка форми
-        const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Форма увійти надіслана');
-            loginModal.style.display = 'none';
-        });
-    });
+    loginBtn.addEventListener('click', () => { modal.style.display = 'block'; });
+    closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+    window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+});
 </script>
 </body>
 </html>
